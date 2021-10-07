@@ -1,0 +1,12 @@
+h1{
+    color: blue;
+}
+div{
+    background-color: goldenrod;
+    color: white;
+    display: flex;
+}
+a{
+    font-size: 2em;
+    margin-left: 5px;
+}
