@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
+const forecast = require('./tools/forecast')
+const geocode = require('./tools/geocode')
 
 const app = express()
 const port = 8000
@@ -19,13 +21,13 @@ hbs.registerPartials(partialsPath)
 // })
 
 
-app.get('/weather',(req,res)=>{
-    res.send('Hello Weather')
-})
+// app.get('/weather',(req,res)=>{
+//     res.send('Hello Weather')
+// })
 
-app.get('/help',(req,res)=>{
-    res.send('Heeeeeelp')
-})
+// app.get('/help',(req,res)=>{
+//     res.send('Heeeeeelp')
+// })
 
 app.get('/about',(req,res)=>{
     res.send({
@@ -35,10 +37,11 @@ app.get('/about',(req,res)=>{
     })
 })
 
-app.get('/index1', (req,res)=>{
+app.get('/', (req,res)=>{
     res.render('index',{
-        title: 'hosam',
+        firstName: 'Hosam',
         words: 'there is an error and we trying to fix it',
+        lastName:'Saleh'
     })
 })
 
@@ -53,6 +56,29 @@ app.get('/about1', (req,res)=>{
     res.render('aboutus',{
         title: 'hosam',
         words: 'there is an error and we trying to fix it',
+    })
+})
+
+
+app.get('/weather',(req,res)=>{
+    if(!req.query.address){
+        return res.send({
+            error:'Please Enter Your Address'
+        })    
+    }
+    geocode(req.query.address,(error,data)=>{
+        if(error){
+            return res.send({error})
+        }
+        forecast(data.letitude,data.longitude,(error,data)=>{
+            if(error){
+                return res.send({error})
+            }
+            res.send({
+                location:req.query.address,
+                forecast:data
+            })
+        })
     })
 })
 

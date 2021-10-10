@@ -9,9 +9,17 @@
 </head>
 <body>
     {{>header}}
-<h1>From Index Page HBS</h1>
-<h2>{{title}}</h2>
-<p>{{words}}</p>
+<h1>Home Page HBS</h1>
+{{!-- <h2>{{title}}</h2>
+<p>{{words}}</p> --}}
+
+<form id="myForm">
+    <input type="text" id="address" placeholder="Enter Your Country">
+    <input type="submit" id="submit" value="Submit">
+</form>
+<p id="location"></p>
+<p id="forecast"></p>
+<p id="error"></p>
     {{>footer}}
     <script src="js/script.js"></script>
 </body>
